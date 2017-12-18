@@ -1,5 +1,6 @@
 ﻿using Gma.System.MouseKeyHook;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -22,11 +23,24 @@ namespace TibiaMarketRush
 
         private int ConfigInExecution;
 
+        public AddItem AddItem;
+
+        public BackgroundWorker BackgroundWorker;
+
         public Form1()
         {
             InitializeComponent();
 
+            ButtonStop.Enabled = false;
+
             HookEvents = Hook.GlobalEvents();
+
+            AddItem = new AddItem();
+
+            BackgroundWorker = new BackgroundWorker()
+            {
+                WorkerSupportsCancellation = true
+            };
 
             ConfigInExecution = -1;
 
@@ -151,6 +165,26 @@ namespace TibiaMarketRush
             }
         }
 
+        private bool IsToBuy(ulong npcPrice, ulong marketPrice)
+        {
+            if (RadioButtonProfitByValue.Checked)
+            {
+                if (npcPrice - marketPrice >= (ulong)NumericUpDownProfitByValue.Value)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if ((decimal)npcPrice / marketPrice >= NumericUpDownProfitByPercentage.Value / 100)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.SearchTextPosition = SearchTextPosition;
@@ -169,8 +203,20 @@ namespace TibiaMarketRush
 
         private void AdicionarItemToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AddItem addItem = new AddItem();
-            addItem.ShowDialog();
+            AddItem.ShowDialog();
+        }
+
+        private void ButtonStart_Click(object sender, EventArgs e)
+        {
+            BackgroundWorker.DoWork += BackgroundWorker_DoWork;
+            BackgroundWorker.RunWorkerAsync();
+
+            ButtonStart.Enabled = true;
+        }
+
+        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -7,54 +7,108 @@ namespace TibiaMarketRush
 {
     public partial class AddItem : Form
     {
-        public Dictionary<string, DataTable> Npcs { get; private set; }
+        public Dictionary<string, List<Item>> Npcs { get; private set; }
 
         public AddItem()
         {
             InitializeComponent();
 
-            Npcs = new Dictionary<string, DataTable>();
+            ListBoxItems.Enabled = false;
+            ButtonAddItem.Enabled = false;
 
-            dataGridView1.Enabled = false;
-        }
+            Npcs = new Dictionary<string, List<Item>>();
 
-        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBox1.SelectedIndex != -1)
+            if (System.IO.Directory.Exists("npcs"))
             {
-                dataGridView1.DataSource = Npcs[(string)comboBox1.SelectedItem];
-                dataGridView1.Enabled = true;
-            }
-            else
-            {
-                dataGridView1.Enabled = false;
-            }
-        }
+                string[] paths = System.IO.Directory.GetFiles("npcs");
 
-        private void DataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
-        {
-            if (e.ColumnIndex == 1)
-            {
-                if (!int.TryParse((string)e.FormattedValue, out int result))
+                foreach (string path in paths)
                 {
-                    e.Cancel = true;
+                    string npc = System.IO.Path.GetFileNameWithoutExtension(path);
+
+                    ComboBoxNpcs.Items.Add(npc);
+                    Npcs[npc] = new List<Item>();
+
+                    using (System.IO.StreamReader streamReader = new System.IO.StreamReader(path))
+                    {
+                        string line;
+                        while ((line = streamReader.ReadLine()) != null)
+                        {
+                            string[] tokens = line.Split(';');
+
+                            Npcs[npc].Add(new Item(tokens[0], ulong.Parse(tokens[1])));
+                        }
+                    }
                 }
             }
         }
 
-        private void ButtonAdd_Click(object sender, EventArgs e)
+        private void AddItem_FormClosing(object sender, FormClosingEventArgs e)
         {
-            comboBox1.Items.Add(TextBoxNpc.Text);
-            Npcs.Add(TextBoxNpc.Text, new DataTable());
+            if (!System.IO.Directory.Exists("npcs"))
+            {
+                System.IO.Directory.CreateDirectory("npcs");
+            }
+
+            foreach (string npc in Npcs.Keys)
+            {
+                using (System.IO.StreamWriter streamWriter = new System.IO.StreamWriter("npcs\\" + npc + ".txt", false))
+                {
+                    List<Item> items = Npcs[npc];
+                    foreach (Item item in items)
+                    {
+                        streamWriter.WriteLine(item.Name + ";" + item.Value);
+                    }
+                }
+            }
+        }
+
+        private void ButtonAddItem_Click(object sender, EventArgs e)
+        {
+            Item item = new Item(TextBoxItemName.Text, (ulong)NumericUpDownItemValue.Value);
+
+            Npcs[(string)ComboBoxNpcs.SelectedItem].Add(item);
+            ListBoxItems.Items.Add(item);
+
+            TextBoxItemName.Clear();
+        }
+
+        private void ComboBoxNpcs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            List<Item> items = Npcs[(string)ComboBoxNpcs.SelectedItem];
+            ListBoxItems.Items.Clear();
+            foreach (Item item in items)
+            {
+                ListBoxItems.Items.Add(item);
+            }
+
+            ListBoxItems.Enabled = true;
+            ButtonAddItem.Enabled = true;
+        }
+
+        private void ButtonAddNpc_Click(object sender, EventArgs e)
+        {
+            if (!Npcs.ContainsKey(TextBoxNpc.Text))
+            {
+                ComboBoxNpcs.Items.Add(TextBoxNpc.Text);
+                Npcs[TextBoxNpc.Text] = new List<Item>();
+            }
+
             TextBoxNpc.Clear();
         }
 
-        private void ButtonDelete_Click(object sender, EventArgs e)
+        private void ButtonDeleteNpc_Click(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedIndex != -1)
+            if (ComboBoxNpcs.SelectedIndex != -1)
             {
-                Npcs.Remove((string)comboBox1.SelectedItem);
-                comboBox1.Items.RemoveAt(comboBox1.SelectedIndex);
+                Npcs.Remove((string)ComboBoxNpcs.SelectedItem);
+                ComboBoxNpcs.Items.RemoveAt(ComboBoxNpcs.SelectedIndex);
+
+                if (ComboBoxNpcs.SelectedIndex == -1)
+                {
+                    ListBoxItems.Enabled = false;
+                    ButtonAddItem.Enabled = false;
+                }
             }
         }
     }
