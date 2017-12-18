@@ -1,5 +1,6 @@
 ﻿using Gma.System.MouseKeyHook;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -30,6 +31,9 @@ namespace TibiaMarketRush
         public Form1()
         {
             InitializeComponent();
+
+            System.Threading.Thread.Sleep(4000);
+            TibiaImageReader tibiaImageReader = new TibiaImageReader();
 
             ButtonStop.Enabled = false;
 
@@ -211,12 +215,32 @@ namespace TibiaMarketRush
             BackgroundWorker.DoWork += BackgroundWorker_DoWork;
             BackgroundWorker.RunWorkerAsync();
 
-            ButtonStart.Enabled = true;
+            ButtonStart.Enabled = false;
+            ButtonStop.Enabled = true;
         }
 
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            throw new NotImplementedException();
+            System.Threading.Thread.Sleep(4000);
+
+            WindowsInput.InputSimulator inputSimulator = new WindowsInput.InputSimulator();
+            WindowsInput.MouseSimulator mouseSimulator = new WindowsInput.MouseSimulator(inputSimulator);
+
+            List<Item> items = AddItem.GetAllItems();
+            ulong spent = 0;
+
+            Cursor = new Cursor(Cursor.Current.Handle);
+
+            foreach (Item item in items)
+            {
+                if (BackgroundWorker.CancellationPending || spent >= NumericUpDownMaxSpent.Value)
+                {
+                    return;
+                }
+
+
+
+            }
         }
     }
 }

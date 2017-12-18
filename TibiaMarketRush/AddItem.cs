@@ -111,5 +111,16 @@ namespace TibiaMarketRush
                 }
             }
         }
+
+        internal List<Item> GetAllItems()
+        {
+            List<Item> items = new List<Item>();
+            foreach (string npc in Npcs.Keys)
+            {
+                items.AddRange(Npcs[npc]);
+            }
+
+            return items;
+        }
     }
 }

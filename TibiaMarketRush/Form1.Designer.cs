@@ -43,12 +43,12 @@
             this.NumericUpDownProfitByValue = new System.Windows.Forms.NumericUpDown();
             this.NumericUpDownProfitByPercentage = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.NumericUpDownMaxSpent = new System.Windows.Forms.NumericUpDown();
             this.menuStrip1.SuspendLayout();
             this.GroupBoxBuyCondition.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByPercentage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownMaxSpent)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -130,7 +130,7 @@
             // GroupBoxBuyCondition
             // 
             this.GroupBoxBuyCondition.AutoSize = true;
-            this.GroupBoxBuyCondition.Controls.Add(this.numericUpDown1);
+            this.GroupBoxBuyCondition.Controls.Add(this.NumericUpDownMaxSpent);
             this.GroupBoxBuyCondition.Controls.Add(this.label1);
             this.GroupBoxBuyCondition.Controls.Add(this.NumericUpDownProfitByPercentage);
             this.GroupBoxBuyCondition.Controls.Add(this.NumericUpDownProfitByValue);
@@ -203,17 +203,17 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "Gastar até:";
             // 
-            // numericUpDown1
+            // NumericUpDownMaxSpent
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(186, 19);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.NumericUpDownMaxSpent.Location = new System.Drawing.Point(186, 19);
+            this.NumericUpDownMaxSpent.Maximum = new decimal(new int[] {
             -727379969,
             232,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown1.TabIndex = 6;
+            this.NumericUpDownMaxSpent.Name = "NumericUpDownMaxSpent";
+            this.NumericUpDownMaxSpent.Size = new System.Drawing.Size(120, 20);
+            this.NumericUpDownMaxSpent.TabIndex = 6;
             // 
             // Form1
             // 
@@ -234,7 +234,7 @@
             this.GroupBoxBuyCondition.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByPercentage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownMaxSpent)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -256,7 +256,7 @@
         private System.Windows.Forms.RadioButton RadioButtonProfitByPercentage;
         private System.Windows.Forms.NumericUpDown NumericUpDownProfitByPercentage;
         private System.Windows.Forms.NumericUpDown NumericUpDownProfitByValue;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown NumericUpDownMaxSpent;
         private System.Windows.Forms.Label label1;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace TibiaMarketRush
 {
@@ -31,7 +32,16 @@ namespace TibiaMarketRush
             NumberColor = Color.FromArgb(244, 244, 244);
         }
 
-        public int ImageToValue(Bitmap image)
+        public uint GetValueOfCurrentItem(Point a, Point b)
+        {
+            Bitmap bitmap = new Bitmap(b.X - a.X + 1, b.Y - a.Y + 1);
+            Graphics graphics = Graphics.FromImage(bitmap);
+            graphics.CopyFromScreen(a, b, bitmap.Size);
+
+            return ImageToValue(bitmap);
+        }
+
+        private uint ImageToValue(Bitmap image)
         {
             string result = "";
 
@@ -73,7 +83,7 @@ namespace TibiaMarketRush
                 }
             }
 
-            return int.Parse(result.Replace(",", ""));
+            return uint.Parse(result.Replace(",", ""));
         }
 
         public Tuple<bool, string, int> GetChar(Bitmap image, int x, int y)
@@ -108,8 +118,6 @@ namespace TibiaMarketRush
 
             return new Tuple<bool, string, int>(false, "", -1);
         }
-
-
 
     }
 }
