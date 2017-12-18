@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using Gma.System.MouseKeyHook;
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using Gma.System.MouseKeyHook;
 
 namespace TibiaMarketRush
 {
@@ -25,11 +20,28 @@ namespace TibiaMarketRush
         public bool IsFirstValuePositionConfigured;
         public bool IsAcceptButtonPositionConfigured;
 
+        private int ConfigInExecution;
+
         public Form1()
         {
             InitializeComponent();
 
             HookEvents = Hook.GlobalEvents();
+
+            ConfigInExecution = -1;
+
+            SearchTextPosition = Properties.Settings.Default.SearchTextPosition;
+            FirstItemPosition = Properties.Settings.Default.FirstItemPosition;
+            FirstValuePositionTop = Properties.Settings.Default.FirstValuePositionTop;
+            FirstValuePositionBottom = Properties.Settings.Default.FirstValuePositionBottom;
+            AcceptButtonPosition = Properties.Settings.Default.AcceptButtonPosition;
+
+            IsSearchTextPositionConfigured = Properties.Settings.Default.IsSearchTextPositionConfigured;
+            IsFirstItemPositionConfigured = Properties.Settings.Default.IsFirstItemPositionConfigured;
+            IsFirstValuePositionConfigured = Properties.Settings.Default.IsFirstValuePositionConfigured;
+            IsAcceptButtonPositionConfigured = Properties.Settings.Default.IsAcceptButtonPositionConfigured;
+
+            AskToConfigurePositions();
         }
 
         /// <summary>
@@ -67,7 +79,28 @@ namespace TibiaMarketRush
         private void ConfigurarLocalDeEscreverNomeDosItemsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Capturaremos seu próximo click com o botão direito do mouse para saber a localização da caixa de pesquisa do market, procure clicar no centro dela (com o botão direito!).\n\n*Obs: Caso você esteja com o market fechado, clique com o botão direito em algum lugar, abra o market e clique novamente na opção de configurar.");
+            ConfigInExecution = 0;
+            HookEvents.MouseClick += HookEvents_MouseClick;
+        }
 
+        private void ConfigurarLocalOndeOPrimeiroItemApareceApósAPesquisaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Capturaremos seu próximo click com o botão direito do mouse para saber a localização do primeiro item que aparece após uma pesquisa.");
+            ConfigInExecution = 1;
+            HookEvents.MouseClick += HookEvents_MouseClick;
+        }
+
+        private void ConfigurarLocalOndeOValorDoPrimeiroItemApareceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Capturaremos os seus próximos dois clicks com o botão direito do mouse para saber a área onde aparece o valor do item.");
+            ConfigInExecution = 2;
+            HookEvents.MouseClick += HookEvents_MouseClick;
+        }
+
+        private void ConfigurarBotãoDeAcceptToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Capturaremos o seu próximo click com o botão direito do mouse para saber a posição onde se encontra o botão accept na parte onde você compra o item.");
+            ConfigInExecution = 4;
             HookEvents.MouseClick += HookEvents_MouseClick;
         }
 
@@ -75,15 +108,69 @@ namespace TibiaMarketRush
         {
             if (e.Button == MouseButtons.Right)
             {
-
                 HookEvents.MouseClick -= HookEvents_MouseClick;
 
-                SearchTextPosition = e.Location;
+                if (ConfigInExecution == 0)
+                {
+                    SearchTextPosition = e.Location;
+                    IsSearchTextPositionConfigured = true;
+                    MessageBox.Show("Posição capturada!");
 
-                IsSearchTextPositionConfigured = true;
+                    ConfigInExecution = -1;
+                }
+                else if (ConfigInExecution == 1)
+                {
+                    FirstItemPosition = e.Location;
+                    IsFirstItemPositionConfigured = true;
+                    MessageBox.Show("Posição capturada!");
 
-                MessageBox.Show("Posição capturada!");
+                    ConfigInExecution = -1;
+                }
+                else if (ConfigInExecution == 2)
+                {
+                    FirstValuePositionTop = e.Location;
+                    ConfigInExecution = 3;
+                    HookEvents.MouseClick += HookEvents_MouseClick;
+                }
+                else if (ConfigInExecution == 3)
+                {
+                    FirstValuePositionBottom = e.Location;
+                    IsFirstValuePositionConfigured = true;
+                    MessageBox.Show("Posições configuradas!");
+
+                    ConfigInExecution = -1;
+                }
+                else if (ConfigInExecution == 4)
+                {
+                    AcceptButtonPosition = e.Location;
+                    IsAcceptButtonPositionConfigured = true;
+                    MessageBox.Show("Posição configurada!");
+
+                    ConfigInExecution = -1;
+                }
             }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.SearchTextPosition = SearchTextPosition;
+            Properties.Settings.Default.FirstItemPosition = FirstItemPosition;
+            Properties.Settings.Default.FirstValuePositionTop = FirstValuePositionTop;
+            Properties.Settings.Default.FirstValuePositionBottom = FirstValuePositionBottom;
+            Properties.Settings.Default.AcceptButtonPosition = AcceptButtonPosition;
+
+            Properties.Settings.Default.IsSearchTextPositionConfigured = IsSearchTextPositionConfigured;
+            Properties.Settings.Default.IsFirstItemPositionConfigured = IsFirstItemPositionConfigured;
+            Properties.Settings.Default.IsFirstValuePositionConfigured = IsFirstValuePositionConfigured;
+            Properties.Settings.Default.IsAcceptButtonPositionConfigured = IsAcceptButtonPositionConfigured;
+
+            Properties.Settings.Default.Save();
+        }
+
+        private void AdicionarItemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddItem addItem = new AddItem();
+            addItem.ShowDialog();
         }
     }
 }
