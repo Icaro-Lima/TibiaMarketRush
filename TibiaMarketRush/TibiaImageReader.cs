@@ -36,7 +36,9 @@ namespace TibiaMarketRush
         {
             Bitmap bitmap = new Bitmap(b.X - a.X + 1, b.Y - a.Y + 1);
             Graphics graphics = Graphics.FromImage(bitmap);
-            graphics.CopyFromScreen(a, b, bitmap.Size);
+            graphics.CopyFromScreen(a, new Point(0, 0), bitmap.Size);
+
+            bitmap.Save("algo.png");
 
             return ImageToValue(bitmap);
         }
@@ -51,11 +53,6 @@ namespace TibiaMarketRush
                 bool hasBreak = false;
                 for (int y = 0; y < image.Height; y++)
                 {
-                    //if (x == 39 || y == 4)
-                    //{
-                    //    Console.WriteLine();
-                    //}
-
                     if (image.GetPixel(x, y).Equals(NumberColor))
                     {
                         hasBreak = true;

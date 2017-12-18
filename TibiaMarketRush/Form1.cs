@@ -28,12 +28,11 @@ namespace TibiaMarketRush
 
         public BackgroundWorker BackgroundWorker;
 
+        private const int DELAY_TO_HARD_OPERATIONS = 1000;
+
         public Form1()
         {
             InitializeComponent();
-
-            System.Threading.Thread.Sleep(4000);
-            TibiaImageReader tibiaImageReader = new TibiaImageReader();
 
             ButtonStop.Enabled = false;
 
@@ -173,7 +172,7 @@ namespace TibiaMarketRush
         {
             if (RadioButtonProfitByValue.Checked)
             {
-                if (npcPrice - marketPrice >= (ulong)NumericUpDownProfitByValue.Value)
+                if (npcPrice >= marketPrice && npcPrice - marketPrice >= (ulong)NumericUpDownProfitByValue.Value)
                 {
                     return true;
                 }
@@ -225,11 +224,11 @@ namespace TibiaMarketRush
 
             WindowsInput.InputSimulator inputSimulator = new WindowsInput.InputSimulator();
             WindowsInput.MouseSimulator mouseSimulator = new WindowsInput.MouseSimulator(inputSimulator);
+            WindowsInput.KeyboardSimulator keyboardSimulator = new WindowsInput.KeyboardSimulator(inputSimulator);
+            TibiaImageReader tibiaImageReader = new TibiaImageReader();
 
             List<Item> items = AddItem.GetAllItems();
             ulong spent = 0;
-
-            Cursor = new Cursor(Cursor.Current.Handle);
 
             foreach (Item item in items)
             {
@@ -238,8 +237,52 @@ namespace TibiaMarketRush
                     return;
                 }
 
+                mouseSimulator.MoveMouseTo((double)SearchTextPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)SearchTextPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
+                System.Threading.Thread.Sleep(50);
+                mouseSimulator.LeftButtonClick();
+                System.Threading.Thread.Sleep(50);
+                keyboardSimulator.ModifiedKeyStroke(WindowsInput.Native.VirtualKeyCode.CONTROL, WindowsInput.Native.VirtualKeyCode.VK_A);
+                System.Threading.Thread.Sleep(50);
+                keyboardSimulator.TextEntry(item.Name);
+                System.Threading.Thread.Sleep(50);
+                mouseSimulator.MoveMouseTo((double)FirstItemPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)FirstItemPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
+                System.Threading.Thread.Sleep(50);
+                mouseSimulator.LeftButtonClick();
+                System.Threading.Thread.Sleep(DELAY_TO_HARD_OPERATIONS);
 
+                try
+                {
+                    while (true)
+                    {
+                        if (BackgroundWorker.CancellationPending || spent >= NumericUpDownMaxSpent.Value)
+                        {
+                            return;
+                        }
 
+                        uint marketValue = tibiaImageReader.GetValueOfCurrentItem(FirstValuePositionTop, FirstValuePositionBottom);
+
+                        if (marketValue + spent > NumericUpDownMaxSpent.Value)
+                        {
+                            break;
+                        }
+
+                        if (IsToBuy(item.Value, marketValue))
+                        {
+                            MessageBox.Show("Vai comprar...");
+
+                            mouseSimulator.MoveMouseTo((double)AcceptButtonPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)AcceptButtonPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
+                            System.Threading.Thread.Sleep(50);
+                            mouseSimulator.LeftButtonClick();
+                            spent += marketValue;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                        System.Threading.Thread.Sleep(DELAY_TO_HARD_OPERATIONS);
+                    }
+                }
+                catch { }
             }
         }
     }

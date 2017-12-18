@@ -106,6 +106,8 @@
             this.ListBoxItems.Name = "ListBoxItems";
             this.ListBoxItems.Size = new System.Drawing.Size(422, 393);
             this.ListBoxItems.TabIndex = 8;
+            this.ListBoxItems.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ListBoxItems_KeyPress);
+            this.ListBoxItems.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.ListBoxItems_PreviewKeyDown);
             // 
             // label3
             // 

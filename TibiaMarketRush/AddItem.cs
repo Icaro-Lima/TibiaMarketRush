@@ -101,6 +101,7 @@ namespace TibiaMarketRush
         {
             if (ComboBoxNpcs.SelectedIndex != -1)
             {
+                System.IO.File.Delete("npcs\\" + (string)ComboBoxNpcs.SelectedItem + ".txt");
                 Npcs.Remove((string)ComboBoxNpcs.SelectedItem);
                 ComboBoxNpcs.Items.RemoveAt(ComboBoxNpcs.SelectedIndex);
 
@@ -121,6 +122,31 @@ namespace TibiaMarketRush
             }
 
             return items;
+        }
+
+        private void ListBoxItems_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Delete)
+            {
+                if (ListBoxItems.SelectedIndex != -1)
+                {
+                    Npcs[(string)ComboBoxNpcs.SelectedItem].RemoveAt(ListBoxItems.SelectedIndex);
+                    ListBoxItems.Items.RemoveAt(ListBoxItems.SelectedIndex);
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private void ListBoxItems_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                if (ListBoxItems.SelectedIndex != -1)
+                {
+                    Npcs[(string)ComboBoxNpcs.SelectedItem].RemoveAt(ListBoxItems.SelectedIndex);
+                    ListBoxItems.Items.RemoveAt(ListBoxItems.SelectedIndex);
+                }
+            }
         }
     }
 }
