@@ -130,5 +130,65 @@ namespace TibiaMarketRush.Properties {
                 this["IsAcceptButtonPositionConfigured"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10000")]
+        public decimal NumericUpDownMaxSpent_Value {
+            get {
+                return ((decimal)(this["NumericUpDownMaxSpent_Value"]));
+            }
+            set {
+                this["NumericUpDownMaxSpent_Value"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public decimal NumericUpDownProfitByValue_Value {
+            get {
+                return ((decimal)(this["NumericUpDownProfitByValue_Value"]));
+            }
+            set {
+                this["NumericUpDownProfitByValue_Value"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public decimal NumericUpDownProfitByPercentage_Value {
+            get {
+                return ((decimal)(this["NumericUpDownProfitByPercentage_Value"]));
+            }
+            set {
+                this["NumericUpDownProfitByPercentage_Value"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool RadioButtonProfitByValue_Checked {
+            get {
+                return ((bool)(this["RadioButtonProfitByValue_Checked"]));
+            }
+            set {
+                this["RadioButtonProfitByValue_Checked"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RadioButtonProfitByPercentage_Checked {
+            get {
+                return ((bool)(this["RadioButtonProfitByPercentage_Checked"]));
+            }
+            set {
+                this["RadioButtonProfitByPercentage_Checked"] = value;
+            }
+        }
     }
 }

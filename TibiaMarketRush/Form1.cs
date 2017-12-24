@@ -47,6 +47,12 @@ namespace TibiaMarketRush
 
             ConfigInExecution = -1;
 
+            RadioButtonProfitByValue.Checked = Properties.Settings.Default.RadioButtonProfitByValue_Checked;
+            RadioButtonProfitByPercentage.Checked = Properties.Settings.Default.RadioButtonProfitByPercentage_Checked;
+            NumericUpDownMaxSpent.Value = Properties.Settings.Default.NumericUpDownMaxSpent_Value;
+            NumericUpDownProfitByValue.Value = Properties.Settings.Default.NumericUpDownProfitByValue_Value;
+            NumericUpDownProfitByPercentage.Value = Properties.Settings.Default.NumericUpDownProfitByPercentage_Value;
+
             SearchTextPosition = Properties.Settings.Default.SearchTextPosition;
             FirstItemPosition = Properties.Settings.Default.FirstItemPosition;
             FirstValuePositionTop = Properties.Settings.Default.FirstValuePositionTop;
@@ -61,10 +67,6 @@ namespace TibiaMarketRush
             AskToConfigurePositions();
         }
 
-        /// <summary>
-        /// Verifica e avisa se falta configurar alguma posição.
-        /// </summary>
-        /// <returns>Retorna true caso esteja tudo configurado e false caso contrário.</returns>
         private bool AskToConfigurePositions()
         {
             bool isAllConfigured = false;
@@ -190,6 +192,12 @@ namespace TibiaMarketRush
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            Properties.Settings.Default.RadioButtonProfitByValue_Checked = RadioButtonProfitByValue.Checked;
+            Properties.Settings.Default.RadioButtonProfitByPercentage_Checked = RadioButtonProfitByPercentage.Checked;
+            Properties.Settings.Default.NumericUpDownMaxSpent_Value = NumericUpDownMaxSpent.Value;
+            Properties.Settings.Default.NumericUpDownProfitByValue_Value = NumericUpDownProfitByValue.Value;
+            Properties.Settings.Default.NumericUpDownProfitByPercentage_Value = NumericUpDownProfitByPercentage.Value;
+
             Properties.Settings.Default.SearchTextPosition = SearchTextPosition;
             Properties.Settings.Default.FirstItemPosition = FirstItemPosition;
             Properties.Settings.Default.FirstValuePositionTop = FirstValuePositionTop;
@@ -211,16 +219,33 @@ namespace TibiaMarketRush
 
         private void ButtonStart_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Use a tecla 'Esc' para parar.");
+
             BackgroundWorker.DoWork += BackgroundWorker_DoWork;
+            BackgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
             BackgroundWorker.RunWorkerAsync();
+
+            HookEvents.KeyPress += HookEvents_KeyPress;
 
             ButtonStart.Enabled = false;
             ButtonStop.Enabled = true;
         }
 
+        private void HookEvents_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Escape)
+            {
+                BackgroundWorker.CancelAsync();
+            }
+        }
+
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            System.Threading.Thread.Sleep(4000);
+            for (int i = 0; i < 400; i++)
+            {
+                if (BackgroundWorker.CancellationPending) return;
+                System.Threading.Thread.Sleep(10);
+            }
 
             WindowsInput.InputSimulator inputSimulator = new WindowsInput.InputSimulator();
             WindowsInput.MouseSimulator mouseSimulator = new WindowsInput.MouseSimulator(inputSimulator);
@@ -268,8 +293,6 @@ namespace TibiaMarketRush
 
                         if (IsToBuy(item.Value, marketValue))
                         {
-                            MessageBox.Show("Vai comprar...");
-
                             mouseSimulator.MoveMouseTo((double)AcceptButtonPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)AcceptButtonPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
                             System.Threading.Thread.Sleep(50);
                             mouseSimulator.LeftButtonClick();
@@ -284,6 +307,17 @@ namespace TibiaMarketRush
                 }
                 catch { }
             }
+        }
+
+        private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            ButtonStart.Enabled = true;
+            ButtonStop.Enabled = false;
+        }
+
+        private void ButtonStop_Click(object sender, EventArgs e)
+        {
+            BackgroundWorker.CancelAsync();
         }
     }
 }

@@ -38,17 +38,17 @@
             this.ButtonStart = new System.Windows.Forms.Button();
             this.ButtonStop = new System.Windows.Forms.Button();
             this.GroupBoxBuyCondition = new System.Windows.Forms.GroupBox();
-            this.RadioButtonProfitByPercentage = new System.Windows.Forms.RadioButton();
-            this.RadioButtonProfitByValue = new System.Windows.Forms.RadioButton();
-            this.NumericUpDownProfitByValue = new System.Windows.Forms.NumericUpDown();
-            this.NumericUpDownProfitByPercentage = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
             this.NumericUpDownMaxSpent = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.NumericUpDownProfitByPercentage = new System.Windows.Forms.NumericUpDown();
+            this.NumericUpDownProfitByValue = new System.Windows.Forms.NumericUpDown();
+            this.RadioButtonProfitByValue = new System.Windows.Forms.RadioButton();
+            this.RadioButtonProfitByPercentage = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.GroupBoxBuyCondition.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByValue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByPercentage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownMaxSpent)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByPercentage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByValue)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -126,6 +126,7 @@
             this.ButtonStop.TabIndex = 2;
             this.ButtonStop.Text = "Parar";
             this.ButtonStop.UseVisualStyleBackColor = true;
+            this.ButtonStop.Click += new System.EventHandler(this.ButtonStop_Click);
             // 
             // GroupBoxBuyCondition
             // 
@@ -143,27 +144,38 @@
             this.GroupBoxBuyCondition.TabStop = false;
             this.GroupBoxBuyCondition.Text = "Condição de compra";
             // 
-            // RadioButtonProfitByPercentage
+            // NumericUpDownMaxSpent
             // 
-            this.RadioButtonProfitByPercentage.AutoSize = true;
-            this.RadioButtonProfitByPercentage.Location = new System.Drawing.Point(6, 71);
-            this.RadioButtonProfitByPercentage.Name = "RadioButtonProfitByPercentage";
-            this.RadioButtonProfitByPercentage.Size = new System.Drawing.Size(174, 17);
-            this.RadioButtonProfitByPercentage.TabIndex = 0;
-            this.RadioButtonProfitByPercentage.Text = "Lucro em cima de porcentagem";
-            this.RadioButtonProfitByPercentage.UseVisualStyleBackColor = true;
+            this.NumericUpDownMaxSpent.Location = new System.Drawing.Point(186, 19);
+            this.NumericUpDownMaxSpent.Maximum = new decimal(new int[] {
+            -727379969,
+            232,
+            0,
+            0});
+            this.NumericUpDownMaxSpent.Name = "NumericUpDownMaxSpent";
+            this.NumericUpDownMaxSpent.Size = new System.Drawing.Size(120, 20);
+            this.NumericUpDownMaxSpent.TabIndex = 6;
             // 
-            // RadioButtonProfitByValue
+            // label1
             // 
-            this.RadioButtonProfitByValue.AutoSize = true;
-            this.RadioButtonProfitByValue.Checked = true;
-            this.RadioButtonProfitByValue.Location = new System.Drawing.Point(9, 45);
-            this.RadioButtonProfitByValue.Name = "RadioButtonProfitByValue";
-            this.RadioButtonProfitByValue.Size = new System.Drawing.Size(135, 17);
-            this.RadioButtonProfitByValue.TabIndex = 1;
-            this.RadioButtonProfitByValue.TabStop = true;
-            this.RadioButtonProfitByValue.Text = "Lucro em cima de valor";
-            this.RadioButtonProfitByValue.UseVisualStyleBackColor = true;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Gastar até:";
+            // 
+            // NumericUpDownProfitByPercentage
+            // 
+            this.NumericUpDownProfitByPercentage.Location = new System.Drawing.Point(186, 71);
+            this.NumericUpDownProfitByPercentage.Name = "NumericUpDownProfitByPercentage";
+            this.NumericUpDownProfitByPercentage.Size = new System.Drawing.Size(120, 20);
+            this.NumericUpDownProfitByPercentage.TabIndex = 4;
+            this.NumericUpDownProfitByPercentage.Value = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
             // 
             // NumericUpDownProfitByValue
             // 
@@ -182,38 +194,27 @@
             0,
             0});
             // 
-            // NumericUpDownProfitByPercentage
+            // RadioButtonProfitByValue
             // 
-            this.NumericUpDownProfitByPercentage.Location = new System.Drawing.Point(186, 71);
-            this.NumericUpDownProfitByPercentage.Name = "NumericUpDownProfitByPercentage";
-            this.NumericUpDownProfitByPercentage.Size = new System.Drawing.Size(120, 20);
-            this.NumericUpDownProfitByPercentage.TabIndex = 4;
-            this.NumericUpDownProfitByPercentage.Value = new decimal(new int[] {
-            40,
-            0,
-            0,
-            0});
+            this.RadioButtonProfitByValue.AutoSize = true;
+            this.RadioButtonProfitByValue.Checked = true;
+            this.RadioButtonProfitByValue.Location = new System.Drawing.Point(9, 45);
+            this.RadioButtonProfitByValue.Name = "RadioButtonProfitByValue";
+            this.RadioButtonProfitByValue.Size = new System.Drawing.Size(135, 17);
+            this.RadioButtonProfitByValue.TabIndex = 1;
+            this.RadioButtonProfitByValue.TabStop = true;
+            this.RadioButtonProfitByValue.Text = "Lucro em cima de valor";
+            this.RadioButtonProfitByValue.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // RadioButtonProfitByPercentage
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 13);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Gastar até:";
-            // 
-            // NumericUpDownMaxSpent
-            // 
-            this.NumericUpDownMaxSpent.Location = new System.Drawing.Point(186, 19);
-            this.NumericUpDownMaxSpent.Maximum = new decimal(new int[] {
-            -727379969,
-            232,
-            0,
-            0});
-            this.NumericUpDownMaxSpent.Name = "NumericUpDownMaxSpent";
-            this.NumericUpDownMaxSpent.Size = new System.Drawing.Size(120, 20);
-            this.NumericUpDownMaxSpent.TabIndex = 6;
+            this.RadioButtonProfitByPercentage.AutoSize = true;
+            this.RadioButtonProfitByPercentage.Location = new System.Drawing.Point(6, 71);
+            this.RadioButtonProfitByPercentage.Name = "RadioButtonProfitByPercentage";
+            this.RadioButtonProfitByPercentage.Size = new System.Drawing.Size(174, 17);
+            this.RadioButtonProfitByPercentage.TabIndex = 0;
+            this.RadioButtonProfitByPercentage.Text = "Lucro em cima de porcentagem";
+            this.RadioButtonProfitByPercentage.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -232,9 +233,9 @@
             this.menuStrip1.PerformLayout();
             this.GroupBoxBuyCondition.ResumeLayout(false);
             this.GroupBoxBuyCondition.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByValue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByPercentage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownMaxSpent)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByPercentage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByValue)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
