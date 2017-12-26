@@ -15,16 +15,19 @@ namespace TibiaMarketRush
         public Point FirstItemPosition;
         public Point FirstValuePositionTop;
         public Point FirstValuePositionBottom;
+        public Point FirstCountPositionTop;
+        public Point FirstCountPositionBottom;
+        public Point ChangeCountPosition;
         public Point AcceptButtonPosition;
 
         public bool IsSearchTextPositionConfigured;
         public bool IsFirstItemPositionConfigured;
         public bool IsFirstValuePositionConfigured;
+        public bool IsFirstCountPositionConfigured;
+        public bool IsChangeCountPositionConfigured;
         public bool IsAcceptButtonPositionConfigured;
 
         private int ConfigInExecution;
-
-        public AddItem AddItem;
 
         public BackgroundWorker BackgroundWorker;
 
@@ -37,8 +40,6 @@ namespace TibiaMarketRush
             ButtonStop.Enabled = false;
 
             HookEvents = Hook.GlobalEvents();
-
-            AddItem = new AddItem();
 
             BackgroundWorker = new BackgroundWorker()
             {
@@ -57,11 +58,16 @@ namespace TibiaMarketRush
             FirstItemPosition = Properties.Settings.Default.FirstItemPosition;
             FirstValuePositionTop = Properties.Settings.Default.FirstValuePositionTop;
             FirstValuePositionBottom = Properties.Settings.Default.FirstValuePositionBottom;
+            FirstCountPositionTop = Properties.Settings.Default.FirstCountPositionTop;
+            FirstCountPositionBottom = Properties.Settings.Default.FirstCountPositionBottom;
+            ChangeCountPosition = Properties.Settings.Default.ChangeCountPosition;
             AcceptButtonPosition = Properties.Settings.Default.AcceptButtonPosition;
 
             IsSearchTextPositionConfigured = Properties.Settings.Default.IsSearchTextPositionConfigured;
             IsFirstItemPositionConfigured = Properties.Settings.Default.IsFirstItemPositionConfigured;
             IsFirstValuePositionConfigured = Properties.Settings.Default.IsFirstValuePositionConfigured;
+            IsFirstCountPositionConfigured = Properties.Settings.Default.IsFirstCountPositionConfigured;
+            IsChangeCountPositionConfigured = Properties.Settings.Default.IsChangeCountPositionConfigured;
             IsAcceptButtonPositionConfigured = Properties.Settings.Default.IsAcceptButtonPositionConfigured;
 
             AskToConfigurePositions();
@@ -83,9 +89,17 @@ namespace TibiaMarketRush
             {
                 MessageBox.Show("Lembre-se de configurar a posição onde aparece o valor do primeiro lance.");
             }
+            else if (!IsFirstCountPositionConfigured)
+            {
+                MessageBox.Show("Lembre-se de configurar a posição onde aparece a quantidade de items do primeiro lance.");
+            }
             else if (!IsAcceptButtonPositionConfigured)
             {
                 MessageBox.Show("Lembre-se de configurar a posição do botão de accept.");
+            }
+            else if (!IsChangeCountPositionConfigured)
+            {
+                MessageBox.Show("Lembre-se de configurar a posição do botão que aumenta a quantidade de items que você vai comprar.");
             }
             else
             {
@@ -113,6 +127,21 @@ namespace TibiaMarketRush
         {
             MessageBox.Show("Capturaremos os seus próximos dois clicks com o botão direito do mouse para saber a área onde aparece o valor do item.");
             ConfigInExecution = 2;
+            HookEvents.MouseClick += HookEvents_MouseClick;
+        }
+
+
+        private void ConfigurarLocalOndeAQuantidadeDeItemsDoPrimeiroLanceApareceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Capturaremos os seus próximos dois clicks com o botão direito do mouse para saber a área onde aparece a quantidade dos items.");
+            ConfigInExecution = 5;
+            HookEvents.MouseClick += HookEvents_MouseClick;
+        }
+
+        private void configurarLocalOndeAumentaAQuantidadeDeItemsQueDesejaComprarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Capturaremos o seu próximo click com o botão direito do mouse para saber a posição onde se encontra o botão que aumenta a quantidade de items que você vai comprar.");
+            ConfigInExecution = 7;
             HookEvents.MouseClick += HookEvents_MouseClick;
         }
 
@@ -167,6 +196,28 @@ namespace TibiaMarketRush
 
                     ConfigInExecution = -1;
                 }
+                else if (ConfigInExecution == 5)
+                {
+                    FirstCountPositionTop = e.Location;
+                    ConfigInExecution = 6;
+                    HookEvents.MouseClick += HookEvents_MouseClick;
+                }
+                else if (ConfigInExecution == 6)
+                {
+                    FirstCountPositionBottom = e.Location;
+                    IsFirstCountPositionConfigured = true;
+                    MessageBox.Show("Posições configuradas!");
+
+                    ConfigInExecution = -1;
+                }
+                else if (ConfigInExecution == 7)
+                {
+                    ChangeCountPosition = e.Location;
+                    IsChangeCountPositionConfigured = true;
+                    MessageBox.Show("Posição capturada!");
+
+                    ConfigInExecution = -1;
+                }
             }
         }
 
@@ -202,11 +253,16 @@ namespace TibiaMarketRush
             Properties.Settings.Default.FirstItemPosition = FirstItemPosition;
             Properties.Settings.Default.FirstValuePositionTop = FirstValuePositionTop;
             Properties.Settings.Default.FirstValuePositionBottom = FirstValuePositionBottom;
+            Properties.Settings.Default.FirstCountPositionTop = FirstCountPositionTop;
+            Properties.Settings.Default.FirstCountPositionBottom = FirstCountPositionBottom;
+            Properties.Settings.Default.ChangeCountPosition = ChangeCountPosition;
             Properties.Settings.Default.AcceptButtonPosition = AcceptButtonPosition;
 
             Properties.Settings.Default.IsSearchTextPositionConfigured = IsSearchTextPositionConfigured;
             Properties.Settings.Default.IsFirstItemPositionConfigured = IsFirstItemPositionConfigured;
             Properties.Settings.Default.IsFirstValuePositionConfigured = IsFirstValuePositionConfigured;
+            Properties.Settings.Default.IsFirstCountPositionConfigured = IsFirstCountPositionConfigured;
+            Properties.Settings.Default.IsChangeCountPositionConfigured = IsChangeCountPositionConfigured;
             Properties.Settings.Default.IsAcceptButtonPositionConfigured = IsAcceptButtonPositionConfigured;
 
             Properties.Settings.Default.Save();
@@ -214,21 +270,25 @@ namespace TibiaMarketRush
 
         private void AdicionarItemToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AddItem.ShowDialog();
+            AddItem addItem = new AddItem();
+            addItem.ShowDialog();
         }
 
         private void ButtonStart_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Use a tecla 'Esc' para parar.");
+            if (AskToConfigurePositions())
+            {
+                MessageBox.Show("Use a tecla 'Esc' para parar.");
 
-            BackgroundWorker.DoWork += BackgroundWorker_DoWork;
-            BackgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
-            BackgroundWorker.RunWorkerAsync();
+                BackgroundWorker.DoWork += BackgroundWorker_DoWork;
+                BackgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
+                BackgroundWorker.RunWorkerAsync();
 
-            HookEvents.KeyPress += HookEvents_KeyPress;
+                HookEvents.KeyPress += HookEvents_KeyPress;
 
-            ButtonStart.Enabled = false;
-            ButtonStop.Enabled = true;
+                ButtonStart.Enabled = false;
+                ButtonStop.Enabled = true;
+            }
         }
 
         private void HookEvents_KeyPress(object sender, KeyPressEventArgs e)
@@ -243,7 +303,12 @@ namespace TibiaMarketRush
         {
             for (int i = 0; i < 400; i++)
             {
-                if (BackgroundWorker.CancellationPending) return;
+                if (BackgroundWorker.CancellationPending)
+                {
+                    e.Cancel = true;
+
+                    return;
+                }
                 System.Threading.Thread.Sleep(10);
             }
 
@@ -251,14 +316,19 @@ namespace TibiaMarketRush
             WindowsInput.MouseSimulator mouseSimulator = new WindowsInput.MouseSimulator(inputSimulator);
             WindowsInput.KeyboardSimulator keyboardSimulator = new WindowsInput.KeyboardSimulator(inputSimulator);
             TibiaImageReader tibiaImageReader = new TibiaImageReader();
+            AddItem addItem = new AddItem();
 
-            List<Item> items = AddItem.GetAllItems();
+            List<Item> items = addItem.GetAllItems();
             ulong spent = 0;
-
             foreach (Item item in items)
             {
                 if (BackgroundWorker.CancellationPending || spent >= NumericUpDownMaxSpent.Value)
                 {
+                    if (BackgroundWorker.CancellationPending)
+                    {
+                        e.Cancel = true;
+                    }
+
                     return;
                 }
 
@@ -281,27 +351,39 @@ namespace TibiaMarketRush
                     {
                         if (BackgroundWorker.CancellationPending || spent >= NumericUpDownMaxSpent.Value)
                         {
+                            if (BackgroundWorker.CancellationPending)
+                            {
+                                e.Cancel = true;
+                            }
+
                             return;
                         }
 
                         uint marketValue = tibiaImageReader.GetValueOfCurrentItem(FirstValuePositionTop, FirstValuePositionBottom);
 
-                        if (marketValue + spent > NumericUpDownMaxSpent.Value)
+                        if (IsToBuy(item.Value, marketValue) && marketValue + spent <= NumericUpDownMaxSpent.Value)
                         {
-                            break;
-                        }
+                            uint quantyToBuy = (uint)(NumericUpDownMaxSpent.Value - spent) / marketValue;
+                            uint quantyIsBuy = Math.Min(quantyToBuy, tibiaImageReader.GetValueOfCurrentItem(FirstCountPositionTop, FirstCountPositionBottom));
 
-                        if (IsToBuy(item.Value, marketValue))
-                        {
+                            for (int i = 1; i < quantyIsBuy; i++)
+                            {
+                                mouseSimulator.MoveMouseTo((double)ChangeCountPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)ChangeCountPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
+                                System.Threading.Thread.Sleep(100);
+                                mouseSimulator.LeftButtonClick();
+                            }
+
                             mouseSimulator.MoveMouseTo((double)AcceptButtonPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)AcceptButtonPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
                             System.Threading.Thread.Sleep(50);
                             mouseSimulator.LeftButtonClick();
-                            spent += marketValue;
+
+                            spent += quantyIsBuy * marketValue;
                         }
                         else
                         {
                             break;
                         }
+
                         System.Threading.Thread.Sleep(DELAY_TO_HARD_OPERATIONS);
                     }
                 }

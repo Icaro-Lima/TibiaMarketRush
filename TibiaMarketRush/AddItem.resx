@@ -117,4 +117,73 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="richTextBox1.Text" xml:space="preserve">
+    <value>// Linhas em branco ou linhas iniciadas com '//' são ignoradas.
+// Modelo:
+
+Axe	7 gp
+Battle Axe	80 gp
+Battle Hammer	120 gp
+Battle Shield	95 gp
+Bone Club	5 gp
+Bone Sword	20 gp
+Brass Armor	150 gp
+Brass Helmet	30 gp
+Brass Legs	49 gp
+Brass Shield	25 gp
+Carlin Sword	118 gp
+Chain Armor	70 gp
+Chain Helmet	17 gp
+Chain Legs	25 gp
+Club	1 gp
+Coat	1 gp
+Copper Shield	50 gp
+Crowbar	50 gp
+Dagger	2 gp
+Double Axe	260 gp
+Doublet	3 gp
+Dwarven Shield	100 gp
+Fire Sword	1000 gp
+Halberd	400 gp
+Hand Axe	4 gp
+Hatchet	25 gp
+Iron Helmet	150 gp
+Jacket	1 gp
+Katana	35 gp
+Leather Armor	12 gp
+Leather Boots	2 gp
+Leather Helmet	4 gp
+Leather Legs	9 gp
+Legion Helmet	22 gp
+Longsword	51 gp
+Mace	30 gp
+Morning Star	100 gp
+Orcish Axe	350 gp
+Plate Armor	400 gp
+Plate Legs	115 gp
+Plate Shield	45 gp
+Rapier	5 gp
+Sabre	12 gp
+Scale Armor	75 gp
+Short Sword	10 gp
+Sickle	3 gp
+Small Axe	5 gp
+Soldier Helmet	16 gp
+Spike Sword	240 gp
+Steel Helmet	293 gp
+Steel Shield	80 gp
+Studded Armor	25 gp
+Studded Club	10 gp
+Studded Helmet	20 gp
+Studded Legs	15 gp
+Studded Shield	16 gp
+Swampling Club	40 gp
+Sword	25 gp
+Throwing Knife	2 gp
+Two Handed Sword	450 gp
+Viking Helmet	66 gp
+Viking Shield	85 gp
+War Hammer	470 gp
+Wooden Shield	5 gp</value>
+  </data>
 </root>

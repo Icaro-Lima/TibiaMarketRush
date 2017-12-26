@@ -1,152 +1,119 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Windows.Forms;
 
 namespace TibiaMarketRush
 {
     public partial class AddItem : Form
     {
-        public Dictionary<string, List<Item>> Npcs { get; private set; }
+        private bool Modified;
 
         public AddItem()
         {
             InitializeComponent();
 
-            ListBoxItems.Enabled = false;
-            ButtonAddItem.Enabled = false;
-
-            Npcs = new Dictionary<string, List<Item>>();
-
-            if (System.IO.Directory.Exists("npcs"))
+            if (System.IO.File.Exists("items.txt"))
             {
-                string[] paths = System.IO.Directory.GetFiles("npcs");
-
-                foreach (string path in paths)
+                using (System.IO.StreamReader streamReader = new System.IO.StreamReader("items.txt"))
                 {
-                    string npc = System.IO.Path.GetFileNameWithoutExtension(path);
-
-                    ComboBoxNpcs.Items.Add(npc);
-                    Npcs[npc] = new List<Item>();
-
-                    using (System.IO.StreamReader streamReader = new System.IO.StreamReader(path))
-                    {
-                        string line;
-                        while ((line = streamReader.ReadLine()) != null)
-                        {
-                            string[] tokens = line.Split(';');
-
-                            Npcs[npc].Add(new Item(tokens[0], ulong.Parse(tokens[1])));
-                        }
-                    }
+                    richTextBox1.Clear();
+                    richTextBox1.AppendText(streamReader.ReadToEnd());
+                    Modified = false;
                 }
             }
         }
 
-        private void AddItem_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (!System.IO.Directory.Exists("npcs"))
-            {
-                System.IO.Directory.CreateDirectory("npcs");
-            }
-
-            foreach (string npc in Npcs.Keys)
-            {
-                using (System.IO.StreamWriter streamWriter = new System.IO.StreamWriter("npcs\\" + npc + ".txt", false))
-                {
-                    List<Item> items = Npcs[npc];
-                    foreach (Item item in items)
-                    {
-                        streamWriter.WriteLine(item.Name + ";" + item.Value);
-                    }
-                }
-            }
-        }
-
-        private void ButtonAddItem_Click(object sender, EventArgs e)
-        {
-            Item item = new Item(TextBoxItemName.Text, (ulong)NumericUpDownItemValue.Value);
-
-            Npcs[(string)ComboBoxNpcs.SelectedItem].Add(item);
-            ListBoxItems.Items.Add(item);
-
-            TextBoxItemName.Clear();
-        }
-
-        private void ComboBoxNpcs_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            List<Item> items = Npcs[(string)ComboBoxNpcs.SelectedItem];
-            ListBoxItems.Items.Clear();
-            foreach (Item item in items)
-            {
-                ListBoxItems.Items.Add(item);
-            }
-
-            ListBoxItems.Enabled = true;
-            ButtonAddItem.Enabled = true;
-        }
-
-        private void ButtonAddNpc_Click(object sender, EventArgs e)
-        {
-            if (!Npcs.ContainsKey(TextBoxNpc.Text))
-            {
-                ComboBoxNpcs.Items.Add(TextBoxNpc.Text);
-                Npcs[TextBoxNpc.Text] = new List<Item>();
-            }
-
-            TextBoxNpc.Clear();
-        }
-
-        private void ButtonDeleteNpc_Click(object sender, EventArgs e)
-        {
-            if (ComboBoxNpcs.SelectedIndex != -1)
-            {
-                System.IO.File.Delete("npcs\\" + (string)ComboBoxNpcs.SelectedItem + ".txt");
-                Npcs.Remove((string)ComboBoxNpcs.SelectedItem);
-                ComboBoxNpcs.Items.RemoveAt(ComboBoxNpcs.SelectedIndex);
-
-                if (ComboBoxNpcs.SelectedIndex == -1)
-                {
-                    ListBoxItems.Enabled = false;
-                    ButtonAddItem.Enabled = false;
-                }
-            }
-        }
-
-        internal List<Item> GetAllItems()
+        public List<Item> GetAllItems()
         {
             List<Item> items = new List<Item>();
-            foreach (string npc in Npcs.Keys)
+            foreach (string line in richTextBox1.Lines)
             {
-                items.AddRange(Npcs[npc]);
+                if (line.TrimStart().StartsWith("//") || line.Trim().Length == 0)
+                {
+                    continue;
+                }
+
+                string[] args = line.Split('\t');
+                items.Add(new Item(args[0], ulong.Parse(args[1].Replace(" ", "").Replace("gp", ""))));
             }
 
             return items;
         }
 
-        private void ListBoxItems_KeyPress(object sender, KeyPressEventArgs e)
+        private bool Validate(out string problemLine)
         {
-            if (e.KeyChar == (char)Keys.Delete)
+            problemLine = "";
+
+            foreach (string line in richTextBox1.Lines)
             {
-                if (ListBoxItems.SelectedIndex != -1)
+                if (line.TrimStart().StartsWith("//") || line.Trim().Length == 0)
                 {
-                    Npcs[(string)ComboBoxNpcs.SelectedItem].RemoveAt(ListBoxItems.SelectedIndex);
-                    ListBoxItems.Items.RemoveAt(ListBoxItems.SelectedIndex);
-                    e.Handled = true;
+                    continue;
+                }
+
+                try
+                {
+                    string[] args = line.Split('\t');
+                    int.Parse(args[1].Replace(" ", "").Replace("gp", ""));
+                }
+                catch
+                {
+                    problemLine = line;
+
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool Save()
+        {
+            if (Validate(out string problemLine))
+            {
+                using (System.IO.StreamWriter streamWriter = new System.IO.StreamWriter("items.txt"))
+                {
+                    streamWriter.Write(richTextBox1.Text);
+                }
+
+                Modified = false;
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("A linha: '" + problemLine + "' apresenta problema de formatação.");
+
+                return false;
+            }
+        }
+
+        private void ButtonSave_Click(object sender, EventArgs e)
+        {
+            Save();
+        }
+
+        private void AddItem_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (Modified)
+            {
+                DialogResult dialogResult = MessageBox.Show("Deseja salvar as alterações antes de fechar?", "", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    if (!Save())
+                    {
+                        e.Cancel = true;
+                    }
+                }
+                else if (dialogResult == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
                 }
             }
         }
 
-        private void ListBoxItems_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        private void RichTextBox1_TextChanged(object sender, EventArgs e)
         {
-            if (e.KeyCode == Keys.Delete)
-            {
-                if (ListBoxItems.SelectedIndex != -1)
-                {
-                    Npcs[(string)ComboBoxNpcs.SelectedItem].RemoveAt(ListBoxItems.SelectedIndex);
-                    ListBoxItems.Items.RemoveAt(ListBoxItems.SelectedIndex);
-                }
-            }
+            Modified = true;
         }
     }
 }

@@ -33,6 +33,8 @@
             this.configurarLocalDeEscreverNomeDosItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configurarLocalOndeOPrimeiroItemApareceApósAPesquisaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configurarLocalOndeOValorDoPrimeiroItemApareceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.configurarLocalOndeAQuantidadeDeItemsDoPrimeiroLanceApareceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.configurarLocalOndeAumentaAQuantidadeDeItemsQueDesejaComprarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configurarBotãoDeAcceptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adicionarItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ButtonStart = new System.Windows.Forms.Button();
@@ -68,6 +70,8 @@
             this.configurarLocalDeEscreverNomeDosItemsToolStripMenuItem,
             this.configurarLocalOndeOPrimeiroItemApareceApósAPesquisaToolStripMenuItem,
             this.configurarLocalOndeOValorDoPrimeiroItemApareceToolStripMenuItem,
+            this.configurarLocalOndeAQuantidadeDeItemsDoPrimeiroLanceApareceToolStripMenuItem,
+            this.configurarLocalOndeAumentaAQuantidadeDeItemsQueDesejaComprarToolStripMenuItem,
             this.configurarBotãoDeAcceptToolStripMenuItem});
             this.configurarToolStripMenuItem.Name = "configurarToolStripMenuItem";
             this.configurarToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
@@ -76,28 +80,42 @@
             // configurarLocalDeEscreverNomeDosItemsToolStripMenuItem
             // 
             this.configurarLocalDeEscreverNomeDosItemsToolStripMenuItem.Name = "configurarLocalDeEscreverNomeDosItemsToolStripMenuItem";
-            this.configurarLocalDeEscreverNomeDosItemsToolStripMenuItem.Size = new System.Drawing.Size(404, 22);
+            this.configurarLocalDeEscreverNomeDosItemsToolStripMenuItem.Size = new System.Drawing.Size(466, 22);
             this.configurarLocalDeEscreverNomeDosItemsToolStripMenuItem.Text = "Configurar local de escrever nome dos items";
             this.configurarLocalDeEscreverNomeDosItemsToolStripMenuItem.Click += new System.EventHandler(this.ConfigurarLocalDeEscreverNomeDosItemsToolStripMenuItem_Click);
             // 
             // configurarLocalOndeOPrimeiroItemApareceApósAPesquisaToolStripMenuItem
             // 
             this.configurarLocalOndeOPrimeiroItemApareceApósAPesquisaToolStripMenuItem.Name = "configurarLocalOndeOPrimeiroItemApareceApósAPesquisaToolStripMenuItem";
-            this.configurarLocalOndeOPrimeiroItemApareceApósAPesquisaToolStripMenuItem.Size = new System.Drawing.Size(404, 22);
+            this.configurarLocalOndeOPrimeiroItemApareceApósAPesquisaToolStripMenuItem.Size = new System.Drawing.Size(466, 22);
             this.configurarLocalOndeOPrimeiroItemApareceApósAPesquisaToolStripMenuItem.Text = "Configurar local onde o primeiro item aparece após a pesquisa";
             this.configurarLocalOndeOPrimeiroItemApareceApósAPesquisaToolStripMenuItem.Click += new System.EventHandler(this.ConfigurarLocalOndeOPrimeiroItemApareceApósAPesquisaToolStripMenuItem_Click);
             // 
             // configurarLocalOndeOValorDoPrimeiroItemApareceToolStripMenuItem
             // 
             this.configurarLocalOndeOValorDoPrimeiroItemApareceToolStripMenuItem.Name = "configurarLocalOndeOValorDoPrimeiroItemApareceToolStripMenuItem";
-            this.configurarLocalOndeOValorDoPrimeiroItemApareceToolStripMenuItem.Size = new System.Drawing.Size(404, 22);
+            this.configurarLocalOndeOValorDoPrimeiroItemApareceToolStripMenuItem.Size = new System.Drawing.Size(466, 22);
             this.configurarLocalOndeOValorDoPrimeiroItemApareceToolStripMenuItem.Text = "Configurar local onde o valor do primeiro item aparece";
             this.configurarLocalOndeOValorDoPrimeiroItemApareceToolStripMenuItem.Click += new System.EventHandler(this.ConfigurarLocalOndeOValorDoPrimeiroItemApareceToolStripMenuItem_Click);
+            // 
+            // configurarLocalOndeAQuantidadeDeItemsDoPrimeiroLanceApareceToolStripMenuItem
+            // 
+            this.configurarLocalOndeAQuantidadeDeItemsDoPrimeiroLanceApareceToolStripMenuItem.Name = "configurarLocalOndeAQuantidadeDeItemsDoPrimeiroLanceApareceToolStripMenuItem";
+            this.configurarLocalOndeAQuantidadeDeItemsDoPrimeiroLanceApareceToolStripMenuItem.Size = new System.Drawing.Size(466, 22);
+            this.configurarLocalOndeAQuantidadeDeItemsDoPrimeiroLanceApareceToolStripMenuItem.Text = "Configurar local onde a quantidade de items do primeiro lance aparece";
+            this.configurarLocalOndeAQuantidadeDeItemsDoPrimeiroLanceApareceToolStripMenuItem.Click += new System.EventHandler(this.ConfigurarLocalOndeAQuantidadeDeItemsDoPrimeiroLanceApareceToolStripMenuItem_Click);
+            // 
+            // configurarLocalOndeAumentaAQuantidadeDeItemsQueDesejaComprarToolStripMenuItem
+            // 
+            this.configurarLocalOndeAumentaAQuantidadeDeItemsQueDesejaComprarToolStripMenuItem.Name = "configurarLocalOndeAumentaAQuantidadeDeItemsQueDesejaComprarToolStripMenuItem";
+            this.configurarLocalOndeAumentaAQuantidadeDeItemsQueDesejaComprarToolStripMenuItem.Size = new System.Drawing.Size(466, 22);
+            this.configurarLocalOndeAumentaAQuantidadeDeItemsQueDesejaComprarToolStripMenuItem.Text = "Configurar local onde aumenta a quantidade de items que deseja comprar";
+            this.configurarLocalOndeAumentaAQuantidadeDeItemsQueDesejaComprarToolStripMenuItem.Click += new System.EventHandler(this.configurarLocalOndeAumentaAQuantidadeDeItemsQueDesejaComprarToolStripMenuItem_Click);
             // 
             // configurarBotãoDeAcceptToolStripMenuItem
             // 
             this.configurarBotãoDeAcceptToolStripMenuItem.Name = "configurarBotãoDeAcceptToolStripMenuItem";
-            this.configurarBotãoDeAcceptToolStripMenuItem.Size = new System.Drawing.Size(404, 22);
+            this.configurarBotãoDeAcceptToolStripMenuItem.Size = new System.Drawing.Size(466, 22);
             this.configurarBotãoDeAcceptToolStripMenuItem.Text = "Configurar botão de accept";
             this.configurarBotãoDeAcceptToolStripMenuItem.Click += new System.EventHandler(this.ConfigurarBotãoDeAcceptToolStripMenuItem_Click);
             // 
@@ -259,6 +277,8 @@
         private System.Windows.Forms.NumericUpDown NumericUpDownProfitByValue;
         private System.Windows.Forms.NumericUpDown NumericUpDownMaxSpent;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripMenuItem configurarLocalOndeAQuantidadeDeItemsDoPrimeiroLanceApareceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem configurarLocalOndeAumentaAQuantidadeDeItemsQueDesejaComprarToolStripMenuItem;
     }
 }
 
