@@ -240,7 +240,7 @@ namespace TibiaMarketRush
             }
             else
             {
-                if ((decimal)npcPrice / marketPrice >= NumericUpDownProfitByPercentage.Value / 100)
+                if ((decimal)npcPrice / marketPrice >= 1 + NumericUpDownProfitByPercentage.Value / 100)
                 {
                     return true;
                 }
