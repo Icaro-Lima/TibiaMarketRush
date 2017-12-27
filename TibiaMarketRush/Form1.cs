@@ -11,6 +11,10 @@ namespace TibiaMarketRush
     {
         public IKeyboardMouseEvents HookEvents;
 
+        public WindowsInput.InputSimulator InputSimulator;
+        public WindowsInput.MouseSimulator MouseSimulator;
+        public WindowsInput.KeyboardSimulator KeyboardSimulator;
+
         public Point SearchTextPosition;
         public Point FirstItemPosition;
         public Point FirstValuePositionTop;
@@ -36,6 +40,10 @@ namespace TibiaMarketRush
         public Form1()
         {
             InitializeComponent();
+
+            InputSimulator = new WindowsInput.InputSimulator();
+            MouseSimulator = new WindowsInput.MouseSimulator(InputSimulator);
+            KeyboardSimulator = new WindowsInput.KeyboardSimulator(InputSimulator);
 
             ButtonStop.Enabled = false;
 
@@ -312,9 +320,6 @@ namespace TibiaMarketRush
                 System.Threading.Thread.Sleep(10);
             }
 
-            WindowsInput.InputSimulator inputSimulator = new WindowsInput.InputSimulator();
-            WindowsInput.MouseSimulator mouseSimulator = new WindowsInput.MouseSimulator(inputSimulator);
-            WindowsInput.KeyboardSimulator keyboardSimulator = new WindowsInput.KeyboardSimulator(inputSimulator);
             TibiaImageReader tibiaImageReader = new TibiaImageReader();
             AddItem addItem = new AddItem();
 
@@ -332,17 +337,17 @@ namespace TibiaMarketRush
                     return;
                 }
 
-                mouseSimulator.MoveMouseTo((double)SearchTextPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)SearchTextPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
+                MouseSimulator.MoveMouseTo((double)SearchTextPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)SearchTextPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
                 System.Threading.Thread.Sleep(50);
-                mouseSimulator.LeftButtonClick();
+                MouseSimulator.LeftButtonClick();
                 System.Threading.Thread.Sleep(50);
-                keyboardSimulator.ModifiedKeyStroke(WindowsInput.Native.VirtualKeyCode.CONTROL, WindowsInput.Native.VirtualKeyCode.VK_A);
+                KeyboardSimulator.ModifiedKeyStroke(WindowsInput.Native.VirtualKeyCode.CONTROL, WindowsInput.Native.VirtualKeyCode.VK_A);
                 System.Threading.Thread.Sleep(50);
-                keyboardSimulator.TextEntry(item.Name);
+                KeyboardSimulator.TextEntry(item.Name);
                 System.Threading.Thread.Sleep(50);
-                mouseSimulator.MoveMouseTo((double)FirstItemPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)FirstItemPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
+                MouseSimulator.MoveMouseTo((double)FirstItemPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)FirstItemPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
                 System.Threading.Thread.Sleep(50);
-                mouseSimulator.LeftButtonClick();
+                MouseSimulator.LeftButtonClick();
                 System.Threading.Thread.Sleep(DELAY_TO_HARD_OPERATIONS);
 
                 try
@@ -368,14 +373,14 @@ namespace TibiaMarketRush
 
                             for (int i = 1; i < quantyIsBuy; i++)
                             {
-                                mouseSimulator.MoveMouseTo((double)ChangeCountPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)ChangeCountPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
+                                MouseSimulator.MoveMouseTo((double)ChangeCountPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)ChangeCountPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
                                 System.Threading.Thread.Sleep(100);
-                                mouseSimulator.LeftButtonClick();
+                                MouseSimulator.LeftButtonClick();
                             }
 
-                            mouseSimulator.MoveMouseTo((double)AcceptButtonPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)AcceptButtonPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
+                            MouseSimulator.MoveMouseTo((double)AcceptButtonPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)AcceptButtonPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
                             System.Threading.Thread.Sleep(50);
-                            mouseSimulator.LeftButtonClick();
+                            MouseSimulator.LeftButtonClick();
 
                             spent += quantyIsBuy * marketValue;
                         }
@@ -393,8 +398,15 @@ namespace TibiaMarketRush
 
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            ButtonStart.Enabled = true;
-            ButtonStop.Enabled = false;
+            if (CheckBoxLoop.Checked && !e.Cancelled)
+            {
+                BackgroundWorker.RunWorkerAsync();
+            }
+            else
+            {
+                ButtonStart.Enabled = true;
+                ButtonStop.Enabled = false;
+            }
         }
 
         private void ButtonStop_Click(object sender, EventArgs e)

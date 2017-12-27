@@ -46,6 +46,7 @@
             this.NumericUpDownProfitByValue = new System.Windows.Forms.NumericUpDown();
             this.RadioButtonProfitByValue = new System.Windows.Forms.RadioButton();
             this.RadioButtonProfitByPercentage = new System.Windows.Forms.RadioButton();
+            this.CheckBoxLoop = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.GroupBoxBuyCondition.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownMaxSpent)).BeginInit();
@@ -234,11 +235,22 @@
             this.RadioButtonProfitByPercentage.Text = "Lucro em cima de porcentagem";
             this.RadioButtonProfitByPercentage.UseVisualStyleBackColor = true;
             // 
+            // CheckBoxLoop
+            // 
+            this.CheckBoxLoop.AutoSize = true;
+            this.CheckBoxLoop.Location = new System.Drawing.Point(174, 327);
+            this.CheckBoxLoop.Name = "CheckBoxLoop";
+            this.CheckBoxLoop.Size = new System.Drawing.Size(50, 17);
+            this.CheckBoxLoop.TabIndex = 4;
+            this.CheckBoxLoop.Text = "Loop";
+            this.CheckBoxLoop.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(697, 358);
+            this.Controls.Add(this.CheckBoxLoop);
             this.Controls.Add(this.GroupBoxBuyCondition);
             this.Controls.Add(this.ButtonStop);
             this.Controls.Add(this.ButtonStart);
@@ -279,6 +291,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem configurarLocalOndeAQuantidadeDeItemsDoPrimeiroLanceApareceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configurarLocalOndeAumentaAQuantidadeDeItemsQueDesejaComprarToolStripMenuItem;
+        private System.Windows.Forms.CheckBox CheckBoxLoop;
     }
 }
 
