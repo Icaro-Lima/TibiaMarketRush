@@ -53,6 +53,8 @@ namespace TibiaMarketRush
             {
                 WorkerSupportsCancellation = true
             };
+            BackgroundWorker.DoWork += BackgroundWorker_DoWork;
+            BackgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
 
             ConfigInExecution = -1;
 
@@ -288,8 +290,6 @@ namespace TibiaMarketRush
             {
                 MessageBox.Show("Use a tecla 'Esc' para parar.");
 
-                BackgroundWorker.DoWork += BackgroundWorker_DoWork;
-                BackgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
                 BackgroundWorker.RunWorkerAsync();
 
                 HookEvents.KeyPress += HookEvents_KeyPress;
@@ -376,6 +376,9 @@ namespace TibiaMarketRush
                                 MouseSimulator.MoveMouseTo((double)ChangeCountPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)ChangeCountPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
                                 System.Threading.Thread.Sleep(100);
                                 MouseSimulator.LeftButtonClick();
+
+                                TextBoxSpent.Text = uint.Parse(TextBoxSpent.Text) + marketValue + "";
+                                TextBoxProfit.Text = uint.Parse(TextBoxProfit.Text) + item.Value - marketValue + "";
                             }
 
                             MouseSimulator.MoveMouseTo((double)AcceptButtonPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)AcceptButtonPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
@@ -383,6 +386,8 @@ namespace TibiaMarketRush
                             MouseSimulator.LeftButtonClick();
 
                             spent += quantyIsBuy * marketValue;
+                            TextBoxSpent.Text = uint.Parse(TextBoxSpent.Text) + marketValue + "";
+                            TextBoxProfit.Text = uint.Parse(TextBoxProfit.Text) + item.Value - marketValue + "";
                         }
                         else
                         {
@@ -404,6 +409,8 @@ namespace TibiaMarketRush
             }
             else
             {
+                HookEvents.KeyPress -= HookEvents_KeyPress;
+
                 ButtonStart.Enabled = true;
                 ButtonStop.Enabled = false;
             }

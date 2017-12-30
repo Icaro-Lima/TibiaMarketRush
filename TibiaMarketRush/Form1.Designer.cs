@@ -47,6 +47,10 @@
             this.RadioButtonProfitByValue = new System.Windows.Forms.RadioButton();
             this.RadioButtonProfitByPercentage = new System.Windows.Forms.RadioButton();
             this.CheckBoxLoop = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.TextBoxSpent = new System.Windows.Forms.TextBox();
+            this.TextBoxProfit = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.GroupBoxBuyCondition.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownMaxSpent)).BeginInit();
@@ -245,11 +249,51 @@
             this.CheckBoxLoop.Text = "Loop";
             this.CheckBoxLoop.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(392, 329);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Gasto:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(542, 329);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(37, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Lucro:";
+            // 
+            // TextBoxSpent
+            // 
+            this.TextBoxSpent.Location = new System.Drawing.Point(436, 326);
+            this.TextBoxSpent.Name = "TextBoxSpent";
+            this.TextBoxSpent.ReadOnly = true;
+            this.TextBoxSpent.Size = new System.Drawing.Size(100, 20);
+            this.TextBoxSpent.TabIndex = 7;
+            this.TextBoxSpent.Text = "0";
+            // 
+            // TextBoxProfit
+            // 
+            this.TextBoxProfit.Location = new System.Drawing.Point(585, 326);
+            this.TextBoxProfit.Name = "TextBoxProfit";
+            this.TextBoxProfit.ReadOnly = true;
+            this.TextBoxProfit.Size = new System.Drawing.Size(100, 20);
+            this.TextBoxProfit.TabIndex = 8;
+            this.TextBoxProfit.Text = "0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(697, 358);
+            this.Controls.Add(this.TextBoxProfit);
+            this.Controls.Add(this.TextBoxSpent);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.CheckBoxLoop);
             this.Controls.Add(this.GroupBoxBuyCondition);
             this.Controls.Add(this.ButtonStop);
@@ -292,6 +336,10 @@
         private System.Windows.Forms.ToolStripMenuItem configurarLocalOndeAQuantidadeDeItemsDoPrimeiroLanceApareceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configurarLocalOndeAumentaAQuantidadeDeItemsQueDesejaComprarToolStripMenuItem;
         private System.Windows.Forms.CheckBox CheckBoxLoop;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox TextBoxSpent;
+        private System.Windows.Forms.TextBox TextBoxProfit;
     }
 }
 

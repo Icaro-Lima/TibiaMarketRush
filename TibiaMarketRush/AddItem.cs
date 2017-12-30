@@ -7,10 +7,13 @@ namespace TibiaMarketRush
     public partial class AddItem : Form
     {
         private bool Modified;
+        private List<string> BlackList;
 
         public AddItem()
         {
             InitializeComponent();
+
+            BlackList = new List<string>(new string[] { "badger fur" });
 
             if (System.IO.File.Exists("items.txt"))
             {
@@ -54,6 +57,12 @@ namespace TibiaMarketRush
                 try
                 {
                     string[] args = line.Split('\t');
+
+                    if (BlackList.Contains(args[0].ToLower()))
+                    {
+                        MessageBox.Show("CUIDADO! Pesquise no market sobre o item '" + args[0] + "' e você entenderá o motivo do alerta.");
+                    }
+
                     int.Parse(args[1].Replace(" ", "").Replace("gp", ""));
                 }
                 catch
