@@ -78,6 +78,8 @@ namespace TibiaMarketRush
             IsChangeCountPositionConfigured = Properties.Settings.Default.IsChangeCountPositionConfigured;
             IsAcceptButtonPositionConfigured = Properties.Settings.Default.IsAcceptButtonPositionConfigured;
 
+            NumericUpDownDelayToRiskOperations.Value = Properties.Settings.Default.NumericUpDownDelayToRiskOperations_Value;
+
             AskToConfigurePositions();
         }
 
@@ -273,6 +275,8 @@ namespace TibiaMarketRush
             Properties.Settings.Default.IsChangeCountPositionConfigured = IsChangeCountPositionConfigured;
             Properties.Settings.Default.IsAcceptButtonPositionConfigured = IsAcceptButtonPositionConfigured;
 
+            Properties.Settings.Default.NumericUpDownDelayToRiskOperations_Value = (int)NumericUpDownDelayToRiskOperations.Value;
+
             Properties.Settings.Default.Save();
         }
 
@@ -341,10 +345,10 @@ namespace TibiaMarketRush
                 KeyboardSimulator.ModifiedKeyStroke(WindowsInput.Native.VirtualKeyCode.CONTROL, WindowsInput.Native.VirtualKeyCode.VK_A);
                 System.Threading.Thread.Sleep(150);
                 KeyboardSimulator.TextEntry(item.Name);
-                System.Threading.Thread.Sleep((int)numericUpDownDelayToRiskOperations.Value);
+                System.Threading.Thread.Sleep((int)NumericUpDownDelayToRiskOperations.Value);
                 MouseSimulator.MoveMouseTo((double)FirstItemPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)FirstItemPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
                 MouseSimulator.LeftButtonDoubleClick();
-                System.Threading.Thread.Sleep((int)numericUpDownDelayToRiskOperations.Value);
+                System.Threading.Thread.Sleep((int)NumericUpDownDelayToRiskOperations.Value);
 
                 try
                 {
@@ -390,7 +394,7 @@ namespace TibiaMarketRush
                             break;
                         }
 
-                        System.Threading.Thread.Sleep((int)numericUpDownDelayToRiskOperations.Value);
+                        System.Threading.Thread.Sleep((int)NumericUpDownDelayToRiskOperations.Value);
                     }
                 }
                 catch { }

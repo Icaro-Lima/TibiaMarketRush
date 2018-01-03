@@ -53,13 +53,13 @@
             this.TextBoxProfit = new System.Windows.Forms.TextBox();
             this.CheckBoxMonitored = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.numericUpDownDelayToRiskOperations = new System.Windows.Forms.NumericUpDown();
+            this.NumericUpDownDelayToRiskOperations = new System.Windows.Forms.NumericUpDown();
             this.menuStrip1.SuspendLayout();
             this.GroupBoxBuyCondition.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownMaxSpent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByPercentage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByValue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDelayToRiskOperations)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDelayToRiskOperations)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -308,23 +308,23 @@
             this.label4.TabIndex = 10;
             this.label4.Text = "Delay para operações de risco:";
             // 
-            // numericUpDownDelayToRiskOperations
+            // NumericUpDownDelayToRiskOperations
             // 
-            this.numericUpDownDelayToRiskOperations.Location = new System.Drawing.Point(172, 143);
-            this.numericUpDownDelayToRiskOperations.Maximum = new decimal(new int[] {
+            this.NumericUpDownDelayToRiskOperations.Location = new System.Drawing.Point(172, 143);
+            this.NumericUpDownDelayToRiskOperations.Maximum = new decimal(new int[] {
             -727379969,
             232,
             0,
             0});
-            this.numericUpDownDelayToRiskOperations.Minimum = new decimal(new int[] {
+            this.NumericUpDownDelayToRiskOperations.Minimum = new decimal(new int[] {
             100,
             0,
             0,
             0});
-            this.numericUpDownDelayToRiskOperations.Name = "numericUpDownDelayToRiskOperations";
-            this.numericUpDownDelayToRiskOperations.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDownDelayToRiskOperations.TabIndex = 11;
-            this.numericUpDownDelayToRiskOperations.Value = new decimal(new int[] {
+            this.NumericUpDownDelayToRiskOperations.Name = "NumericUpDownDelayToRiskOperations";
+            this.NumericUpDownDelayToRiskOperations.Size = new System.Drawing.Size(120, 20);
+            this.NumericUpDownDelayToRiskOperations.TabIndex = 11;
+            this.NumericUpDownDelayToRiskOperations.Value = new decimal(new int[] {
             1000,
             0,
             0,
@@ -335,7 +335,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(697, 358);
-            this.Controls.Add(this.numericUpDownDelayToRiskOperations);
+            this.Controls.Add(this.NumericUpDownDelayToRiskOperations);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.CheckBoxMonitored);
             this.Controls.Add(this.TextBoxProfit);
@@ -358,7 +358,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownMaxSpent)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByPercentage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByValue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDelayToRiskOperations)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDelayToRiskOperations)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -391,7 +391,7 @@
         private System.Windows.Forms.TextBox TextBoxProfit;
         private System.Windows.Forms.CheckBox CheckBoxMonitored;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.NumericUpDown numericUpDownDelayToRiskOperations;
+        private System.Windows.Forms.NumericUpDown NumericUpDownDelayToRiskOperations;
     }
 }
 

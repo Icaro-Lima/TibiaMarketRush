@@ -250,5 +250,17 @@ namespace TibiaMarketRush.Properties {
                 this["IsChangeCountPositionConfigured"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        public int NumericUpDownDelayToRiskOperations_Value {
+            get {
+                return ((int)(this["NumericUpDownDelayToRiskOperations_Value"]));
+            }
+            set {
+                this["NumericUpDownDelayToRiskOperations_Value"] = value;
+            }
+        }
     }
 }
