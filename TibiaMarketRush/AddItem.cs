@@ -13,7 +13,7 @@ namespace TibiaMarketRush
         {
             InitializeComponent();
 
-            BlackList = new List<string>(new string[] { "badger fur" });
+            BlackList = new List<string>(new string[] { "badger fur", "heroic axe", "headchopper" });
 
             if (System.IO.File.Exists("items.txt"))
             {

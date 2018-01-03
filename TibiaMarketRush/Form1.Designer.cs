@@ -51,11 +51,15 @@
             this.label3 = new System.Windows.Forms.Label();
             this.TextBoxSpent = new System.Windows.Forms.TextBox();
             this.TextBoxProfit = new System.Windows.Forms.TextBox();
+            this.CheckBoxMonitored = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.numericUpDownDelayToRiskOperations = new System.Windows.Forms.NumericUpDown();
             this.menuStrip1.SuspendLayout();
             this.GroupBoxBuyCondition.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownMaxSpent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByPercentage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByValue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDelayToRiskOperations)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -285,11 +289,55 @@
             this.TextBoxProfit.TabIndex = 8;
             this.TextBoxProfit.Text = "0";
             // 
+            // CheckBoxMonitored
+            // 
+            this.CheckBoxMonitored.AutoSize = true;
+            this.CheckBoxMonitored.Location = new System.Drawing.Point(230, 327);
+            this.CheckBoxMonitored.Name = "CheckBoxMonitored";
+            this.CheckBoxMonitored.Size = new System.Drawing.Size(79, 17);
+            this.CheckBoxMonitored.TabIndex = 9;
+            this.CheckBoxMonitored.Text = "Monitorado";
+            this.CheckBoxMonitored.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 145);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(154, 13);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "Delay para operações de risco:";
+            // 
+            // numericUpDownDelayToRiskOperations
+            // 
+            this.numericUpDownDelayToRiskOperations.Location = new System.Drawing.Point(172, 143);
+            this.numericUpDownDelayToRiskOperations.Maximum = new decimal(new int[] {
+            -727379969,
+            232,
+            0,
+            0});
+            this.numericUpDownDelayToRiskOperations.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numericUpDownDelayToRiskOperations.Name = "numericUpDownDelayToRiskOperations";
+            this.numericUpDownDelayToRiskOperations.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownDelayToRiskOperations.TabIndex = 11;
+            this.numericUpDownDelayToRiskOperations.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(697, 358);
+            this.Controls.Add(this.numericUpDownDelayToRiskOperations);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.CheckBoxMonitored);
             this.Controls.Add(this.TextBoxProfit);
             this.Controls.Add(this.TextBoxSpent);
             this.Controls.Add(this.label3);
@@ -310,6 +358,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownMaxSpent)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByPercentage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownProfitByValue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDelayToRiskOperations)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -340,6 +389,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox TextBoxSpent;
         private System.Windows.Forms.TextBox TextBoxProfit;
+        private System.Windows.Forms.CheckBox CheckBoxMonitored;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown numericUpDownDelayToRiskOperations;
     }
 }
 

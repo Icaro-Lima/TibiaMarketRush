@@ -35,8 +35,6 @@ namespace TibiaMarketRush
 
         public BackgroundWorker BackgroundWorker;
 
-        private const int DELAY_TO_HARD_OPERATIONS = 1000;
-
         public Form1()
         {
             InitializeComponent();
@@ -338,17 +336,15 @@ namespace TibiaMarketRush
                 }
 
                 MouseSimulator.MoveMouseTo((double)SearchTextPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)SearchTextPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
-                System.Threading.Thread.Sleep(50);
                 MouseSimulator.LeftButtonClick();
-                System.Threading.Thread.Sleep(50);
+                System.Threading.Thread.Sleep(150);
                 KeyboardSimulator.ModifiedKeyStroke(WindowsInput.Native.VirtualKeyCode.CONTROL, WindowsInput.Native.VirtualKeyCode.VK_A);
-                System.Threading.Thread.Sleep(50);
+                System.Threading.Thread.Sleep(150);
                 KeyboardSimulator.TextEntry(item.Name);
-                System.Threading.Thread.Sleep(50);
+                System.Threading.Thread.Sleep((int)numericUpDownDelayToRiskOperations.Value);
                 MouseSimulator.MoveMouseTo((double)FirstItemPosition.X / Screen.PrimaryScreen.Bounds.Width * ushort.MaxValue, (double)FirstItemPosition.Y / Screen.PrimaryScreen.Bounds.Height * ushort.MaxValue);
-                System.Threading.Thread.Sleep(50);
-                MouseSimulator.LeftButtonClick();
-                System.Threading.Thread.Sleep(DELAY_TO_HARD_OPERATIONS);
+                MouseSimulator.LeftButtonDoubleClick();
+                System.Threading.Thread.Sleep((int)numericUpDownDelayToRiskOperations.Value);
 
                 try
                 {
@@ -366,7 +362,7 @@ namespace TibiaMarketRush
 
                         uint marketValue = tibiaImageReader.GetValueOfCurrentItem(FirstValuePositionTop, FirstValuePositionBottom);
 
-                        if (IsToBuy(item.Value, marketValue) && marketValue + spent <= NumericUpDownMaxSpent.Value)
+                        if (IsToBuy(item.Value, marketValue) && (!CheckBoxMonitored.Checked || MessageBox.Show("Pode comprar? Item: " + item.Name + " Valor: " + item.Value, "", MessageBoxButtons.YesNo) == DialogResult.Yes) && marketValue + spent <= NumericUpDownMaxSpent.Value)
                         {
                             uint quantyToBuy = (uint)(NumericUpDownMaxSpent.Value - spent) / marketValue;
                             uint quantyIsBuy = Math.Min(quantyToBuy, tibiaImageReader.GetValueOfCurrentItem(FirstCountPositionTop, FirstCountPositionBottom));
@@ -394,7 +390,7 @@ namespace TibiaMarketRush
                             break;
                         }
 
-                        System.Threading.Thread.Sleep(DELAY_TO_HARD_OPERATIONS);
+                        System.Threading.Thread.Sleep((int)numericUpDownDelayToRiskOperations.Value);
                     }
                 }
                 catch { }
